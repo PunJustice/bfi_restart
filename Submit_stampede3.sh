@@ -8,6 +8,7 @@
 #SBATCH -A TG-PHY990007N                # Account name
 #SBATCH --no-requeue
 #SBATCH --nodes 1
+#SBATCH --begin now+2days        # Stay in pending for 2 days
 
 umask 0022
 
@@ -21,4 +22,4 @@ Machine="Stampede3"
 .bfi_restart/Restart.sh $ProjectNumberOrName $SLURM_JOB_NAME $SLURM_JOB_ID $EMAIL $Machine
 
 # Resumbmit the job to slurm
-sbatch -J $ProjectNumberOrName --export=ALL,EMAIL=$EMAIL .bfi_restart/Submit.sh
+ssh login1.stampede3.tacc.utexas.edu "sbatch -J $ProjectNumberOrName --export=ALL,EMAIL=$EMAIL,BFI_HOME=$BFI_HOME,BFI_USER=$BFI_USER .bfi_restart/Submit.sh"
